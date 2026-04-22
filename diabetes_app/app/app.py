@@ -6,14 +6,17 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Page config
-st.set_page_config(page_title="Diabetes Risk Predictor", layout="wide")
+st.set_page_config(
+    page_title="Diabetes Risk Predictor",
+    layout="wide"
+)
 
-# Load model
-model_path = "model.pkl"
+# safer model loading
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "model.pkl")
 
 if not os.path.exists(model_path):
-    st.error("❌ Model not found. Run training first.")
+    st.error(f"❌ Model not found at {model_path}")
     st.stop()
 
 model = joblib.load(model_path)
